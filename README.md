@@ -45,11 +45,11 @@ Then use prompts such as:
 
 ### Option C: Claude Code
 
-Install or symlink the `swift-expert-skill/` folder following Claude's skills documentation and then invoke it in natural language when working on Swift tasks.
+Install or symlink the `swift-expert-skill/` folder following Claude's skills documentation: [Claude: Using Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview#using-skills). Then invoke it in natural language when working on Swift tasks.
 
 ### Option D: Cursor and other skills-compatible tools
 
-Install or symlink the `swift-expert-skill/` folder into the location expected by your tool. Any client that supports the [Agent Skills open format](https://agentskills.io/home) should be able to use the skill folder directly.
+Install or symlink the `swift-expert-skill/` folder into the location expected by your tool. For Cursor, see [Cursor: Plugins documentation](https://cursor.com/docs/plugins) or [Cursor: Enabling Skills](https://cursor.com/docs/context/skills#enabling-skills). Any client that supports the [Agent Skills open format](https://agentskills.io/home) should be able to use the skill folder directly.
 
 ### How to verify
 
@@ -131,6 +131,13 @@ Install or symlink the `swift-expert-skill/` folder into a skills-compatible loc
 - `~/.agents/skills/`
 
 The Agent Skills specification and discovery conventions are documented at [agentskills.io/specification](https://agentskills.io/specification) and [agentskills.io/client-implementation/adding-skills-support](https://agentskills.io/client-implementation/adding-skills-support).
+
+Popular tool docs:
+
+- Codex: [Agent Skills](https://developers.openai.com/codex/skills/)
+- Claude: [Using Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview#using-skills)
+- Cursor: [Plugins documentation](https://cursor.com/docs/plugins)
+- Cursor: [Enabling Skills](https://cursor.com/docs/context/skills#enabling-skills)
 
 ## Validation
 
