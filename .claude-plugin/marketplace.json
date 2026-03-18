@@ -1,0 +1,44 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/refs/heads/main/marketplace/marketplace.schema.json",
+  "name": "swift-expert-skill",
+  "version": "1.0.1",
+  "owner": {
+    "name": "Rouzbeh Abadi",
+    "email": "46832341+rouzbeh-abadi@users.noreply.github.com"
+  },
+  "metadata": {
+    "description": "Broad Swift guidance for language patterns, concurrency, Swift Package Manager, testing, and code quality."
+  },
+  "plugins": [
+    {
+      "name": "swift-expert",
+      "description": "Expert Swift guidance for language patterns, concurrency, Swift Package Manager, testing, and SwiftLint-supported code quality.",
+      "repository": "https://github.com/rouzbeh-abadi/Swift-Agent-Skill",
+      "version": "1.0.1",
+      "author": {
+        "name": "Rouzbeh Abadi",
+        "email": "46832341+rouzbeh-abadi@users.noreply.github.com"
+      },
+      "license": "MIT",
+      "category": "development",
+      "keywords": [
+        "swift",
+        "concurrency",
+        "spm",
+        "swift-package-manager",
+        "swiftlint",
+        "testing",
+        "code-quality"
+      ],
+      "tags": [
+        "swift",
+        "concurrency",
+        "spm",
+        "swiftlint",
+        "testing",
+        "code-quality"
+      ],
+      "source": "./"
+    }
+  ]
+}

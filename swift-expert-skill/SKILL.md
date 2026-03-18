@@ -1,6 +1,6 @@
 ---
 name: swift-expert-skill
-description: Write, review, refactor, or maintain Swift code across apps, packages, and libraries. Use when working on Swift language patterns, optionals and errors, concurrency, Swift Package Manager, tests, or SwiftLint-backed style cleanup.
+description: Write, review, refactor, or maintain Swift code across apps, packages, and libraries. Use for Swift language patterns, optionals and errors, concurrency, Swift Package Manager, tests, and SwiftLint-backed style cleanup.
 license: MIT
 compatibility: Designed for Agent Skills-compatible coding agents working in local Swift projects. SwiftLint and Swift Package Manager commands are optional when available.
 ---
@@ -8,7 +8,7 @@ compatibility: Designed for Agent Skills-compatible coding agents working in loc
 # Swift Expert Skill
 
 ## Overview
-Use this skill to write, review, or improve Swift code in a broad and practical way. It covers the language itself, concurrency, package management, testing, and style guidance. SwiftLint support is one part of the skill, but not the whole skill.
+Use this skill to write, review, or improve Swift code across language design, concurrency, package management, testing, and style guidance. SwiftLint support is part of the skill, not the whole skill.
 
 ## Workflow Decision Tree
 
@@ -23,7 +23,7 @@ Use this skill to write, review, or improve Swift code in a broad and practical 
 
 ### 2) Improve existing Swift code
 - Apply low-risk lint and readability fixes first
-- Simplify optional handling and error propagation where behavior stays the same
+- Simplify optional handling and error propagation when behavior stays the same
 - Tighten concurrency boundaries: `@MainActor`, task ownership, cancellation, and isolation
 - Improve package manifests and target boundaries when structure is unclear or brittle
 - Strengthen tests around touched behavior
@@ -35,7 +35,7 @@ Use this skill to write, review, or improve Swift code in a broad and practical 
 - Use structured concurrency rather than ad hoc background work
 - Keep package boundaries and dependencies intentional
 - Add tests where the new behavior has meaningful logic
-- Use the style guide for final cleanup and consistency
+- Use the style guide for final cleanup
 
 ### 4) Maintain or package a Swift project
 - Review `Package.swift` and target structure using `references/swift-package-manager-guide.md`
@@ -50,7 +50,7 @@ Use this skill to write, review, or improve Swift code in a broad and practical 
 - Use `let` by default and opt into mutation deliberately
 - Keep public APIs explicit about failure, mutability, and async behavior
 - Prefer descriptive argument labels when they improve call-site clarity
-- Use protocols where they improve boundaries, not as a default abstraction tax
+- Use protocols when they improve boundaries, not by default
 
 ### Optionals and Errors
 - Avoid force unwraps and force casts unless the invariant is explicit and failure is acceptable
@@ -81,7 +81,7 @@ Use this skill to write, review, or improve Swift code in a broad and practical 
 - Use `references/swift-style-and-lint-guide.md` for SwiftLint-aligned formatting and cleanup
 - Prefer mechanical lint fixes before judgment-heavy style rewrites
 - Do not assume every project uses the exact same lint config
-- Use `assets/swiftlint.yml` as a starter, not a universal rulebook
+- Use `assets/swiftlint.yml` as a starter, not a rulebook
 
 ## Quick Reference
 

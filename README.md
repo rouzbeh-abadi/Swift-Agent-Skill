@@ -4,8 +4,6 @@ A publishable Agent Skills repository for broad Swift development guidance, with
 
 Repository: [rouzbeh-abadi/Swift-Agent-Skill](https://github.com/rouzbeh-abadi/Swift-Agent-Skill)
 
-This repository is inspired by the structure and delivery style of [AvdLee's SwiftUI-Agent-Skill](https://github.com/AvdLee/SwiftUI-Agent-Skill), but tailored for broader Swift development rather than SwiftUI alone.
-
 ## Included skill
 
 - `swift-expert-skill` — Use when writing, reviewing, refactoring, or maintaining Swift code across app, package, and library projects.
@@ -33,23 +31,36 @@ Example prompt:
 
 > Use the swift expert skill and review this Swift package for concurrency, testing gaps, and SwiftLint issues.
 
-### Option B: Codex
+### Option B: Claude Code Plugin
 
-Save or symlink [swift-expert-skill](./swift-expert-skill) in one of the supported Codex skills locations described in the official OpenAI Codex skills documentation: [Agent Skills](https://developers.openai.com/codex/skills/).
+#### Personal Usage
+To install this skill for your personal use in Claude Code:
 
-Then use prompts such as:
+1. Add the marketplace:
 
-- `Use the swift-expert-skill and review this Swift file for optionals, errors, and lint issues.`
-- `Use the swift-expert-skill and improve this Package.swift and target layout.`
-- `Use the swift-expert-skill and add tests for the touched async behavior.`
+```bash
+/plugin marketplace add rouzbeh-abadi/Swift-Agent-Skill
+```
 
-### Option C: Claude Code
+2. Install the skill:
 
-Install or symlink the `swift-expert-skill/` folder following Claude's skills documentation: [Claude: Using Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview#using-skills). Then invoke it in natural language when working on Swift tasks.
+```bash
+/plugin install swift-expert@swift-expert-skill
+```
 
-### Option D: Cursor and other skills-compatible tools
+### Option C: Cursor plugin (coming soon)
 
-Install or symlink the `swift-expert-skill/` folder into the location expected by your tool. For Cursor, see [Cursor: Plugins documentation](https://cursor.com/docs/plugins) or [Cursor: Enabling Skills](https://cursor.com/docs/context/skills#enabling-skills). Any client that supports the [Agent Skills open format](https://agentskills.io/home) should be able to use the skill folder directly.
+This repository is now packaged for Cursor plugin submission, but the marketplace listing is not live yet.
+
+### Option D: Codex / OpenAI-compatible tools
+
+This repository includes an `agents/openai.yaml` manifest. Copy or symlink the `swift-expert-skill/` folder into your Codex skills directory:
+
+```bash
+cp -R swift-expert-skill/ "$CODEX_HOME/skills/swift-expert-skill"
+```
+
+See [Codex skills documentation](https://developers.openai.com/codex/skills/) for details on where to save skills.
 
 ### How to verify
 
@@ -88,6 +99,15 @@ swift-expert-skill/
     swift-style-and-lint-guide.md
   assets/
     swiftlint.yml
+agents/
+  openai.yaml
+.claude-plugin/
+  plugin.json
+  marketplace.json
+.cursor-plugin/
+  plugin.json
+assets/
+  logo.svg
 ```
 
 ## Skill Structure
@@ -99,6 +119,11 @@ swift-expert-skill/
 - [swift-expert-skill/references/swift-testing-guide.md](./swift-expert-skill/references/swift-testing-guide.md) - Test review and implementation guidance
 - [swift-expert-skill/references/swift-style-and-lint-guide.md](./swift-expert-skill/references/swift-style-and-lint-guide.md) - SwiftLint-aligned style and lint guidance
 - [swift-expert-skill/assets/swiftlint.yml](./swift-expert-skill/assets/swiftlint.yml) - Starter SwiftLint configuration
+- [agents/openai.yaml](./agents/openai.yaml) - OpenAI-compatible manifest for Codex and related tools
+- [.claude-plugin/plugin.json](./.claude-plugin/plugin.json) - Claude plugin metadata
+- [.claude-plugin/marketplace.json](./.claude-plugin/marketplace.json) - Claude marketplace metadata
+- [.cursor-plugin/plugin.json](./.cursor-plugin/plugin.json) - Cursor plugin metadata
+- [assets/logo.svg](./assets/logo.svg) - Decorative plugin icon asset
 
 ## Maintenance
 
@@ -112,6 +137,8 @@ The repository includes a maintenance skill for refreshing the reference materia
 ```
 
 Use [update-swift-apis/SKILL.md](./.agents/skills/update-swift-apis/SKILL.md) when Swift, Swift Package Manager, or SwiftLint guidance changes and you want to refresh the repository references before a release.
+
+Note: only `swift-expert-skill` is intended to be published in the Cursor plugin. The maintenance skill remains a repository workflow utility.
 
 ## Contributing
 
@@ -134,7 +161,7 @@ The Agent Skills specification and discovery conventions are documented at [agen
 
 Popular tool docs:
 
-- Codex: [Agent Skills](https://developers.openai.com/codex/skills/)
+- Codex: [Where to save skills](https://developers.openai.com/codex/skills/#where-to-save-skills)
 - Claude: [Using Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview#using-skills)
 - Cursor: [Plugins documentation](https://cursor.com/docs/plugins)
 - Cursor: [Enabling Skills](https://cursor.com/docs/context/skills#enabling-skills)
