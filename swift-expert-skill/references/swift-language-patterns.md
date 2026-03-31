@@ -54,6 +54,52 @@ extension DateFormatter {
 }
 ```
 
+## UserDefaults
+
+- Avoid scattering raw `UserDefaults` keys across the codebase.
+- Centralize keys in a dedicated namespace type so reads, writes, and removals stay consistent.
+- Wrap related `UserDefaults` access in a focused store type instead of repeating string-based calls everywhere.
+- Inject the `UserDefaults` instance when possible so the store can be tested with an isolated suite.
+- If a reset-all operation is needed, clear only the keys owned by that store rather than wiping unrelated defaults.
+
+```swift
+private enum DefaultsKey {
+    static let hasSeenOnboarding = "hasSeenOnboarding"
+    static let preferredTheme = "preferredTheme"
+
+    static let all = [
+        hasSeenOnboarding,
+        preferredTheme
+    ]
+}
+
+final class AppSettingsStore {
+    private let defaults: UserDefaults
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+    }
+
+    func setHasSeenOnboarding(_ value: Bool) {
+        defaults.set(value, forKey: DefaultsKey.hasSeenOnboarding)
+    }
+
+    func hasSeenOnboarding() -> Bool {
+        defaults.bool(forKey: DefaultsKey.hasSeenOnboarding)
+    }
+
+    func removeHasSeenOnboarding() {
+        defaults.removeObject(forKey: DefaultsKey.hasSeenOnboarding)
+    }
+
+    func removeAll() {
+        for key in DefaultsKey.all {
+            defaults.removeObject(forKey: key)
+        }
+    }
+}
+```
+
 ## Collections and Control Flow
 
 - Prefer `isEmpty` when emptiness is the real question.
@@ -70,3 +116,4 @@ extension DateFormatter {
 - [ ] Functions stay focused when splitting logic improves clarity or testability
 - [ ] Reusable cross-cutting logic is extracted into focused helpers or extensions when appropriate
 - [ ] Reusable helpers and extensions with real behavior are supported by direct unit tests when appropriate
+- [ ] `UserDefaults` usage is centralized, focused, and avoids scattered raw keys
