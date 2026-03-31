@@ -1,6 +1,6 @@
 ---
 name: swift-expert-skill
-description: Write, review, refactor, or maintain Swift code across apps, packages, and libraries. Use for Swift language patterns, optionals and errors, concurrency, Swift Package Manager, tests, and SwiftLint-backed style cleanup.
+description: Write, review, refactor, or maintain Swift code across apps, packages, and libraries. Use for Swift language patterns, optionals and errors, concurrency, Swift Package Manager, tests, SwiftUI ViewModel guidance, and SwiftLint-backed style cleanup.
 license: MIT
 compatibility: Designed for Agent Skills-compatible coding agents working in local Swift projects. SwiftLint and Swift Package Manager commands are optional when available.
 ---
@@ -8,7 +8,7 @@ compatibility: Designed for Agent Skills-compatible coding agents working in loc
 # Swift Expert Skill
 
 ## Overview
-Use this skill to write, review, or improve Swift code across language design, concurrency, package management, testing, and style guidance. SwiftLint support is part of the skill, not the whole skill.
+Use this skill to write, review, or improve Swift code across language design, concurrency, package management, testing, lightweight SwiftUI ViewModel guidance, and style guidance. SwiftLint support is part of the skill, not the whole skill.
 
 ## Workflow Decision Tree
 
@@ -17,6 +17,7 @@ Use this skill to write, review, or improve Swift code across language design, c
 - Review task and actor usage against `references/swift-concurrency-guide.md`
 - Check package layout and manifest choices with `references/swift-package-manager-guide.md`
 - Review tests using `references/swift-testing-guide.md`
+- For SwiftUI screens, review state ownership and ViewModel usage with `references/swiftui-viewmodel-guide.md`
 - Use `references/swift-style-and-lint-guide.md` for formatting, linting, and safe mechanical cleanup
 - Flag unsafe patterns such as force unwraps, force casts, detached tasks without justification, and weak error handling
 - Suggest local improvements first before proposing broad redesigns
@@ -27,6 +28,7 @@ Use this skill to write, review, or improve Swift code across language design, c
 - Tighten concurrency boundaries: `@MainActor`, task ownership, cancellation, and isolation
 - Improve package manifests and target boundaries when structure is unclear or brittle
 - Strengthen tests around touched behavior
+- In SwiftUI code, keep presentational views simple and only introduce ViewModels when state or logic justifies them
 - Keep edits local unless the user explicitly wants a broader refactor
 
 ### 3) Implement new Swift code
@@ -35,6 +37,7 @@ Use this skill to write, review, or improve Swift code across language design, c
 - Use structured concurrency rather than ad hoc background work
 - Keep package boundaries and dependencies intentional
 - Add tests where the new behavior has meaningful logic
+- For SwiftUI, choose between local state and a ViewModel based on responsibility, not by default
 - Use the style guide for final cleanup
 
 ### 4) Maintain or package a Swift project
@@ -77,6 +80,13 @@ Use this skill to write, review, or improve Swift code across language design, c
 - Keep test helpers simple and local to the behavior they support
 - Test async behavior with clear expectations around cancellation, ordering, and failure
 
+### SwiftUI ViewModels
+- Do not create a ViewModel for every view by default
+- Use a ViewModel when a view coordinates async work, owns screen-level state, or performs presentation-specific transformation logic
+- Keep small presentational views focused on rendering passed-in data and local UI state
+- Prefer `@MainActor` ViewModels for UI-facing observable state
+- Keep ViewModels cohesive: one screen or flow is a better fit than many tiny wrappers
+
 ### Style and Linting
 - Use `references/swift-style-and-lint-guide.md` for SwiftLint-aligned formatting and cleanup
 - Prefer mechanical lint fixes before judgment-heavy style rewrites
@@ -92,6 +102,7 @@ Use this skill to write, review, or improve Swift code across language design, c
 | Concurrency | `references/swift-concurrency-guide.md` |
 | Package management | `references/swift-package-manager-guide.md` |
 | Testing | `references/swift-testing-guide.md` |
+| SwiftUI ViewModels | `references/swiftui-viewmodel-guide.md` |
 | Style and linting | `references/swift-style-and-lint-guide.md` |
 
 ### Typical Examples
@@ -103,6 +114,16 @@ guard let url = URL(string: value) else {
 
 // Prefer structured concurrency
 let data = try await client.fetchProfile(id: userID)
+
+// Prefer a ViewModel when a SwiftUI screen owns async loading and screen state
+@MainActor
+final class ProfileViewModel: ObservableObject {
+    @Published private(set) var profile: Profile?
+
+    func load(using client: APIClient) async throws {
+        profile = try await client.fetchProfile()
+    }
+}
 
 // Prefer isEmpty when emptiness is the real question
 if items.isEmpty {
@@ -117,6 +138,7 @@ if items.isEmpty {
 - [ ] Concurrency uses structured tasks, clear isolation, and cancellation awareness
 - [ ] Package manifests and target boundaries are intentional
 - [ ] Tests cover touched behavior where logic changed
+- [ ] SwiftUI code uses ViewModels intentionally rather than one per view by habit
 - [ ] Formatting and linting issues are cleaned up without unnecessary churn
 - [ ] Force unwraps and force casts are avoided or clearly justified
 - [ ] `let` is used where mutation is not needed
@@ -127,4 +149,5 @@ if items.isEmpty {
 - `references/swift-concurrency-guide.md` - Structured concurrency, isolation, and cancellation guidance
 - `references/swift-package-manager-guide.md` - Package manifests, target boundaries, and dependency hygiene
 - `references/swift-testing-guide.md` - Testing structure and practical review guidance
+- `references/swiftui-viewmodel-guide.md` - When to use a SwiftUI ViewModel and when local view state is enough
 - `references/swift-style-and-lint-guide.md` - SwiftLint-aligned formatting and cleanup guidance
