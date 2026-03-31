@@ -8,6 +8,7 @@ Use this file when reviewing or writing tests for Swift code.
 - Keep setup obvious and assertions specific.
 - Prefer deterministic tests that do not depend on timing, order, or shared state unless the behavior itself requires it.
 - When meaningful logic is extracted into a smaller function, add or update tests so the new behavior is directly covered.
+- Reusable helpers and extensions with real behavior should usually have direct unit tests, not only indirect coverage through higher-level features.
 
 ## Unit Tests
 
@@ -16,6 +17,7 @@ Use this file when reviewing or writing tests for Swift code.
 - Prefer descriptive test names that explain the scenario and expected result.
 - Add tests to the most relevant existing test file when one already matches the type or feature.
 - Create a new test file when the behavior has no clear existing test home.
+- When testing reusable extensions or helper types, place tests in the clearest matching file rather than hiding them in unrelated feature tests.
 - Do not add low-value tests for trivial wrappers, delegate forwarding, or framework glue with no meaningful logic.
 
 ## Async Tests
@@ -28,6 +30,7 @@ Use this file when reviewing or writing tests for Swift code.
 
 - [ ] Tests cover meaningful behavior changes
 - [ ] Extracted logic with real behavior is directly tested when appropriate
+- [ ] Reusable helpers and extensions with meaningful behavior are directly tested when appropriate
 - [ ] Setup and assertions are easy to read
 - [ ] Async tests are deterministic
 - [ ] Helpers do not hide the intent of the test

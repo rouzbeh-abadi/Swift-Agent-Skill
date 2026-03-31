@@ -34,6 +34,26 @@ Use this file when reviewing or writing everyday Swift code that is not primaril
 - Use generics when they improve reuse without making the API harder to understand.
 - Use protocols to define boundaries, not just to pre-emptively abstract everything.
 
+## Reusable Helpers and Extensions
+
+- When logic is general-purpose or reused in multiple places, extract it into a focused helper, utility type, or extension instead of rewriting it inline.
+- Prefer an extension when the behavior naturally belongs to an existing type.
+- Prefer a small helper type or wrapper when the behavior needs configuration, state, or lifecycle management.
+- Avoid vague catch-all utility files when a more focused abstraction would be clearer.
+- For expensive shared objects such as formatters, prefer a reusable cached instance rather than recreating it repeatedly.
+- When a reusable helper or extension contains meaningful behavior, treat it as logic that should usually receive direct unit tests.
+
+```swift
+extension DateFormatter {
+    static let displayDate: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    }()
+}
+```
+
 ## Collections and Control Flow
 
 - Prefer `isEmpty` when emptiness is the real question.
@@ -48,3 +68,5 @@ Use this file when reviewing or writing everyday Swift code that is not primaril
 - [ ] APIs read clearly at the call site
 - [ ] Control flow is easy to scan
 - [ ] Functions stay focused when splitting logic improves clarity or testability
+- [ ] Reusable cross-cutting logic is extracted into focused helpers or extensions when appropriate
+- [ ] Reusable helpers and extensions with real behavior are supported by direct unit tests when appropriate

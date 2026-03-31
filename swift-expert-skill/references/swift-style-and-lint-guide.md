@@ -62,6 +62,19 @@ These are common style improvements, but they require some care:
 - Add explicit access control when API visibility is otherwise unclear.
 - Do not rewrite large files purely for style if it creates unnecessary churn.
 
+## Reusable File Naming
+
+- Avoid vague file names such as `Extensions.swift`, `Helpers.swift`, or `Utils.swift` when the code has a clear owner or purpose.
+- Name extension files as `Type+Purpose.swift`.
+- Keep each extension file focused on one responsibility.
+- Name helper types and utility files by what they do, not by their implementation detail.
+
+Examples:
+- `String+Formatting.swift`
+- `String+Validation.swift`
+- `DateFormatter+Display.swift`
+- `CurrencyFormatter.swift`
+
 ## Function Declarations and Comments
 
 - For long function signatures, keep the function name and first parameter on the same line.
@@ -98,5 +111,6 @@ When reviewing or editing Swift code, use this order:
 2. Unsafe patterns like `!` and `as!`
 3. Redundant syntax cleanup
 4. Readability improvements such as wrapping and simpler control flow
-5. Function declarations and comments that are hard to scan or lack needed context
-6. Temporary debug output that should be removed or upgraded to real logging
+5. Reusable helpers and extension file naming that are unclear or overly generic
+6. Function declarations and comments that are hard to scan or lack needed context
+7. Temporary debug output that should be removed or upgraded to real logging
