@@ -62,6 +62,13 @@ These are common style improvements, but they require some care:
 - Add explicit access control when API visibility is otherwise unclear.
 - Do not rewrite large files purely for style if it creates unnecessary churn.
 
+## Debug Output
+
+- Avoid leaving ad hoc `print` calls in production app code.
+- Prefer `Logger` for application logging that should remain in the codebase.
+- If temporary console debugging is needed during development, prefer `debugPrint` over `print` for developer-focused inspection.
+- `print` is still reasonable for simple scripts, playgrounds, or intentional CLI output.
+
 ## Review Priorities
 
 When reviewing or editing Swift code, use this order:
@@ -69,3 +76,4 @@ When reviewing or editing Swift code, use this order:
 2. Unsafe patterns like `!` and `as!`
 3. Redundant syntax cleanup
 4. Readability improvements such as wrapping and simpler control flow
+5. Temporary debug output that should be removed or upgraded to real logging
