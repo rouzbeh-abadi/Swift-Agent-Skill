@@ -75,6 +75,41 @@ Examples:
 - `DateFormatter+Display.swift`
 - `CurrencyFormatter.swift`
 
+## File Organization with Extensions and MARK
+
+- When a type grows beyond a very small implementation, organize the file by responsibility with `// MARK: -` sections.
+- Keep stored properties in the main type declaration, then group behavior in focused extensions below.
+- Prefer the main behavior or primary conformance in the first extension.
+- Prefer a small number of categorized extensions over many tiny ones.
+- Do not create one extension per function.
+- Use additional extensions for clear categories such as view sections, actions, delegate methods, formatting, or persistence helpers.
+- Prefer `private extension` when the grouped behavior does not need wider visibility.
+- Name each MARK by responsibility instead of generic labels.
+
+```swift
+final class CheckoutCoordinator {
+    private let service: CheckoutService
+
+    init(service: CheckoutService) {
+        self.service = service
+    }
+}
+
+// MARK: - Navigation
+extension CheckoutCoordinator {
+    func startCheckout() {
+        // Start flow
+    }
+}
+
+// MARK: - Helpers
+private extension CheckoutCoordinator {
+    func makeRequestID() -> UUID {
+        UUID()
+    }
+}
+```
+
 ## Function Declarations and Comments
 
 - For long function signatures, keep the function name and first parameter on the same line.
@@ -112,5 +147,6 @@ When reviewing or editing Swift code, use this order:
 3. Redundant syntax cleanup
 4. Readability improvements such as wrapping and simpler control flow
 5. Reusable helpers and extension file naming that are unclear or overly generic
-6. Function declarations and comments that are hard to scan or lack needed context
-7. Temporary debug output that should be removed or upgraded to real logging
+6. File organization with `// MARK: -` and extensions when responsibilities are hard to scan
+7. Function declarations and comments that are hard to scan or lack needed context
+8. Temporary debug output that should be removed or upgraded to real logging
