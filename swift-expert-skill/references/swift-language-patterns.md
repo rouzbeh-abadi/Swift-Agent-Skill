@@ -7,6 +7,7 @@ Use this file when reviewing or writing everyday Swift code that is not primaril
 - Prefer clarity over cleverness.
 - Keep types and functions focused.
 - Make ownership, mutability, failure, and asynchrony obvious from the API.
+- Prefer smaller, cohesive functions when they make logic easier to read, reuse, and test.
 
 ## Optionals
 
@@ -46,3 +47,4 @@ Use this file when reviewing or writing everyday Swift code that is not primaril
 - [ ] Mutation is intentional and minimal
 - [ ] APIs read clearly at the call site
 - [ ] Control flow is easy to scan
+- [ ] Functions stay focused when splitting logic improves clarity or testability
