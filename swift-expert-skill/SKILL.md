@@ -1,6 +1,6 @@
 ---
 name: swift-expert-skill
-description: Write, review, refactor, or maintain Swift code across apps, packages, and libraries. Use for Swift language patterns, optionals and errors, concurrency, Swift Package Manager, tests, SwiftUI ViewModel guidance, and SwiftLint-backed style cleanup.
+description: Write, review, refactor, or maintain Swift code across apps, packages, and libraries. Use for Swift language patterns, optionals and errors, concurrency, Swift Package Manager, tests, SwiftUI ViewModel and view-structure guidance, and SwiftLint-backed style cleanup.
 license: MIT
 compatibility: Designed for Agent Skills-compatible coding agents working in local Swift projects. SwiftLint and Swift Package Manager commands are optional when available.
 ---
@@ -8,7 +8,7 @@ compatibility: Designed for Agent Skills-compatible coding agents working in loc
 # Swift Expert Skill
 
 ## Overview
-Use this skill to write, review, or improve Swift code across language design, concurrency, package management, testing, lightweight SwiftUI ViewModel guidance, and style guidance. SwiftLint support is part of the skill, not the whole skill.
+Use this skill to write, review, or improve Swift code across language design, concurrency, package management, testing, lightweight SwiftUI ViewModel and view-structure guidance, and style guidance. SwiftLint support is part of the skill, not the whole skill.
 
 ## Workflow Decision Tree
 
@@ -18,6 +18,7 @@ Use this skill to write, review, or improve Swift code across language design, c
 - Check package layout and manifest choices with `references/swift-package-manager-guide.md`
 - Review tests using `references/swift-testing-guide.md`
 - For SwiftUI screens, review state ownership and ViewModel usage with `references/swiftui-viewmodel-guide.md`
+- For SwiftUI view composition, review body structure and extraction choices with `references/swiftui-view-structure-guide.md`
 - Use `references/swift-style-and-lint-guide.md` for formatting, linting, and safe mechanical cleanup
 - Flag unsafe patterns such as force unwraps, force casts, detached tasks without justification, and weak error handling
 - Suggest local improvements first before proposing broad redesigns
@@ -29,6 +30,7 @@ Use this skill to write, review, or improve Swift code across language design, c
 - Improve package manifests and target boundaries when structure is unclear or brittle
 - Strengthen tests around touched behavior
 - In SwiftUI code, keep presentational views simple and only introduce ViewModels when state or logic justifies them
+- Keep SwiftUI `body` implementations readable by extracting sections into small helpers or separate subviews when needed
 - Keep edits local unless the user explicitly wants a broader refactor
 
 ### 3) Implement new Swift code
@@ -38,6 +40,7 @@ Use this skill to write, review, or improve Swift code across language design, c
 - Keep package boundaries and dependencies intentional
 - Add tests where the new behavior has meaningful logic
 - For SwiftUI, choose between local state and a ViewModel based on responsibility, not by default
+- Build SwiftUI screens from named sections rather than letting one large `body` absorb every view
 - Use the style guide for final cleanup
 
 ### 4) Maintain or package a Swift project
@@ -87,6 +90,12 @@ Use this skill to write, review, or improve Swift code across language design, c
 - Prefer `@MainActor` ViewModels for UI-facing observable state
 - Keep ViewModels cohesive: one screen or flow is a better fit than many tiny wrappers
 
+### SwiftUI View Structure
+- Keep SwiftUI `body` implementations readable by composing them from named sections
+- Use small computed properties or `@ViewBuilder` functions for simple local sections when they improve readability
+- Prefer separate subview structs for complex, reusable, or stateful sections
+- Do not extract every single line mechanically; extract at the level of meaningful sections and responsibilities
+
 ### Style and Linting
 - Use `references/swift-style-and-lint-guide.md` for SwiftLint-aligned formatting and cleanup
 - Prefer mechanical lint fixes before judgment-heavy style rewrites
@@ -103,6 +112,7 @@ Use this skill to write, review, or improve Swift code across language design, c
 | Package management | `references/swift-package-manager-guide.md` |
 | Testing | `references/swift-testing-guide.md` |
 | SwiftUI ViewModels | `references/swiftui-viewmodel-guide.md` |
+| SwiftUI view structure | `references/swiftui-view-structure-guide.md` |
 | Style and linting | `references/swift-style-and-lint-guide.md` |
 
 ### Typical Examples
@@ -125,6 +135,14 @@ final class ProfileViewModel: ObservableObject {
     }
 }
 
+// Prefer a named section when a SwiftUI body starts growing
+private var headerSection: some View {
+    VStack(alignment: .leading, spacing: 8) {
+        Text(title)
+        Text(subtitle)
+    }
+}
+
 // Prefer isEmpty when emptiness is the real question
 if items.isEmpty {
     return []
@@ -139,6 +157,7 @@ if items.isEmpty {
 - [ ] Package manifests and target boundaries are intentional
 - [ ] Tests cover touched behavior where logic changed
 - [ ] SwiftUI code uses ViewModels intentionally rather than one per view by habit
+- [ ] SwiftUI `body` implementations stay readable and avoid absorbing too many unrelated sections directly
 - [ ] Formatting and linting issues are cleaned up without unnecessary churn
 - [ ] Force unwraps and force casts are avoided or clearly justified
 - [ ] `let` is used where mutation is not needed
@@ -150,4 +169,5 @@ if items.isEmpty {
 - `references/swift-package-manager-guide.md` - Package manifests, target boundaries, and dependency hygiene
 - `references/swift-testing-guide.md` - Testing structure and practical review guidance
 - `references/swiftui-viewmodel-guide.md` - When to use a SwiftUI ViewModel and when local view state is enough
+- `references/swiftui-view-structure-guide.md` - How to keep SwiftUI `body` code readable with extracted sections and subviews
 - `references/swift-style-and-lint-guide.md` - SwiftLint-aligned formatting and cleanup guidance
